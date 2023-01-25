@@ -1,2 +1,2 @@
-# CIS440_group7
-CIS 440 repository for Group 7
+# ProjectTemplate
+copy this code into your own repository, and use it for your project as you see fit!
