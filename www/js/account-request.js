@@ -19,19 +19,23 @@ newButton.addEventListener("click", (e) => {
     e.preventDefault();
 
     const username = newForm.username.value;
-    const password = security.hashString(security.encryptString(security.saltString(newForm.password.value)));
+    const password = newForm.password.value;
     const firstName = newForm.firstname.value;
     const lastName = newForm.lastname.value;
     const email = newForm.email.value;
 
     
     let userFound = false;
+    let emailFound = false;
     let validUsername = true;
     let validEmailDomain = false;
 
     for (let idx = 0; idx < users.length; idx++) {
       if (users[idx].username === username) {
         userFound = true;
+        break;
+      } else if (users[idx].email === email) {
+        emailFound = true;
         break;
       }
     }
@@ -49,13 +53,29 @@ newButton.addEventListener("click", (e) => {
     if (userFound) {
         document.getElementById("new-error-msg").innerHTML = 'An account with that username already exists!'
         newErrorMsg.style.opacity = 1;
-    } else if (!validUsername) {
+    } 
+    else if (emailFound) {
+      document.getElementById("new-error-msg").innerHTML = 'An account with that email already exists!'
+        newErrorMsg.style.opacity = 1;
+    } 
+    else if (!validUsername) {
         newErrorMsg.innerHTML = 'Your username must consist of alphanumeric characters only!';
         newErrorMsg.style.opacity = 1;
-    } else if (!validEmailDomain) {
+    } 
+    else if (!validEmailDomain) {
         newErrorMsg.innerHTML = "Your email domain isn't registered in our database!";
         newErrorMsg.style.opacity = 1;
     } else {
+        users.push({
+          "username": username,
+          "password": password,
+          "firstname": firstName,
+          "lastname": lastName,
+          "email": email,
+          "failedAttempts": 0,
+          "isAdmin": 0
+        })
+        sessionStorage.setItem('userlist', JSON.stringify(users));
         window.location.href = './new-account-confirmation.html';
     }
 })

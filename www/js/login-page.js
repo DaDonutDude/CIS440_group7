@@ -13,7 +13,7 @@ loginButton.addEventListener("click", (e) => {
     e.preventDefault();
 
     const username = loginForm.username.value;
-    const password = security.hashString(security.encryptString(security.saltString(loginForm.password.value)));
+    const password = loginForm.password.value;
 
     let idx = 0
     let userFound = false;
@@ -32,7 +32,8 @@ loginButton.addEventListener("click", (e) => {
       loginErrorMsg.innerHTML = 'Your account has been locked due to due many failed login attempts. Please contact the customer support team for assistance.';
       loginErrorMsg.style.opacity = 1;
     } else if (users[idx].username === username && users[idx].password === password) {
-        window.location.href = './user-home.html';
+        if (users[idx].isAdmin === 1) window.location.href = './admin-home.html';
+        else window.location.href = './user-home.html';
     } else {
         loginErrorMsg.style.opacity = 1;
         users[idx].failedAttempts++;
