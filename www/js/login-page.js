@@ -31,7 +31,7 @@ loginButton.addEventListener("click", (e) => {
     } else if (users[idx].failedAttempts >= 3) {
       loginErrorMsg.innerHTML = 'Your account has been locked due to due many failed login attempts. Please contact the customer support team for assistance.';
       loginErrorMsg.style.opacity = 1;
-    } else if (users[idx].username === username && users[idx].password === password) {
+    } else if (users[idx].username.toLowerCase() === username.toLowerCase() && users[idx].password === password) {
         if (users[idx].isAdmin === 1) window.location.href = './admin-home.html';
         else window.location.href = './user-home.html';
     } else {
