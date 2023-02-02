@@ -53,20 +53,21 @@ newButton.addEventListener("click", (e) => {
     if (userFound) {
         document.getElementById("new-error-msg").innerHTML = 'An account with that username already exists!'
         newErrorMsg.style.opacity = 1;
-    } 
-    else if (emailFound) {
+    } else if (emailFound) {
       document.getElementById("new-error-msg").innerHTML = 'An account with that email already exists!'
         newErrorMsg.style.opacity = 1;
-    } 
-    else if (!validUsername) {
+    } else if (!validUsername) {
         newErrorMsg.innerHTML = 'Your username must consist of alphanumeric characters only!';
         newErrorMsg.style.opacity = 1;
-    } 
-    else if (!validEmailDomain) {
+    } else if (!validEmailDomain) {
         newErrorMsg.innerHTML = "Your email domain isn't registered in our database!";
         newErrorMsg.style.opacity = 1;
     } else {
-        users.push({
+        let pendingAccounts = [];
+        if (sessionStorage.getItem('pendingAccounts') != null) {
+          pendingAccounts = JSON.parse(sessionStorage.getItem('pendingAccounts'));
+        }
+        pendingAccounts.push({
           "username": username,
           "password": password,
           "firstname": firstName,
@@ -75,7 +76,8 @@ newButton.addEventListener("click", (e) => {
           "failedAttempts": 0,
           "isAdmin": 0
         })
-        sessionStorage.setItem('userlist', JSON.stringify(users));
+        sessionStorage.setItem('pendingAccounts', JSON.stringify(pendingAccounts));
         window.location.href = './new-account-confirmation.html';
+      }
     }
-})
+)
