@@ -2,6 +2,7 @@
 
 let users;
 let emailDomains;
+let pendingAccounts = [];
 const newForm = document.getElementById("new-form");
 const newButton = document.getElementById("new-form-submit");
 const newErrorMsg = document.getElementById("new-error-msg");
@@ -23,7 +24,6 @@ newButton.addEventListener("click", (e) => {
     const firstName = newForm.firstname.value;
     const lastName = newForm.lastname.value;
     const email = newForm.email.value;
-
     
     let userFound = false;
     let emailFound = false;
@@ -63,7 +63,6 @@ newButton.addEventListener("click", (e) => {
         newErrorMsg.innerHTML = "Your email domain isn't registered in our database!";
         newErrorMsg.style.opacity = 1;
     } else {
-        let pendingAccounts = [];
         if (sessionStorage.getItem('pendingAccounts') != null) {
           pendingAccounts = JSON.parse(sessionStorage.getItem('pendingAccounts'));
         }
