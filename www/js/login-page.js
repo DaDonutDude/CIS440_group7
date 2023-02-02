@@ -19,7 +19,7 @@ loginButton.addEventListener("click", (e) => {
     let userFound = false;
 
     while (idx < users.length) {
-      if (users[idx].username === username) {
+      if (users[idx].username.toLowerCase() === username.toLowerCase()) {
         userFound = true;
         break;
       }
