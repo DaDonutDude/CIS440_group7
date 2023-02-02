@@ -31,10 +31,10 @@ newButton.addEventListener("click", (e) => {
     let validEmailDomain = false;
 
     for (let idx = 0; idx < users.length; idx++) {
-      if (users[idx].username === username) {
+      if (users[idx].username.toLowerCase() === username.toLowerCase()) {
         userFound = true;
         break;
-      } else if (users[idx].email === email) {
+      } else if (users[idx].email.toLowerCase() === email.toLowerCase()) {
         emailFound = true;
         break;
       }
@@ -46,7 +46,7 @@ newButton.addEventListener("click", (e) => {
     }
 
     for (let idx = 0; idx < emailDomains.length; idx++) {
-        validEmailDomain = email.includes(emailDomains[idx]);
+        validEmailDomain = email.includes(emailDomains[idx].toLowerCase());
         if (!validEmailDomain) break;
     }
 
