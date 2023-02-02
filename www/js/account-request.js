@@ -16,6 +16,10 @@ fetch('./emaildomains.json')
   .then((response) => response.json())
   .then((json) => emailDomains = json);
 
+if (sessionStorage.getItem('pendingAccounts') != null) {
+  pendingAccounts = JSON.parse(sessionStorage.getItem('pendingAccounts'));
+}
+
 newButton.addEventListener("click", (e) => {
     e.preventDefault();
 
@@ -25,10 +29,19 @@ newButton.addEventListener("click", (e) => {
     const lastName = newForm.lastname.value;
     const email = newForm.email.value;
     
+    let accountAlreadyRequested = false;
     let userFound = false;
     let emailFound = false;
     let validUsername = true;
     let validEmailDomain = false;
+
+    
+    for (let idx = 0; idx < pendingAccounts.length; idx++) {
+      if (pendingAccounts[idx].username.toLowerCase() === username.toLowerCase() || pendingAccounts[idx].email.toLowerCase() === email.toLowerCase()) {
+        accountAlreadyRequested = true;
+        break;
+      }
+    }
 
     for (let idx = 0; idx < users.length; idx++) {
       if (users[idx].username.toLowerCase() === username.toLowerCase()) {
@@ -53,6 +66,9 @@ newButton.addEventListener("click", (e) => {
     if (userFound) {
         document.getElementById("new-error-msg").innerHTML = 'An account with that username already exists!'
         newErrorMsg.style.opacity = 1;
+    } else if (accountAlreadyRequested) {
+      document.getElementById("new-error-msg").innerHTML = 'An account has already been requested with this username or email!'
+        newErrorMsg.style.opacity = 1;
     } else if (emailFound) {
       document.getElementById("new-error-msg").innerHTML = 'An account with that email already exists!'
         newErrorMsg.style.opacity = 1;
@@ -63,9 +79,6 @@ newButton.addEventListener("click", (e) => {
         newErrorMsg.innerHTML = "Your email domain isn't registered in our database!";
         newErrorMsg.style.opacity = 1;
     } else {
-        if (sessionStorage.getItem('pendingAccounts') != null) {
-          pendingAccounts = JSON.parse(sessionStorage.getItem('pendingAccounts'));
-        }
         pendingAccounts.push({
           "username": username,
           "password": password,
