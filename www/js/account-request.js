@@ -94,7 +94,7 @@ newButton.addEventListener("click", (e) => {
 
     for (let idx = 0; idx < emailDomains.length; idx++) {
         validEmailDomain = email.includes(emailDomains[idx][0].toLowerCase());
-        if (!validEmailDomain) break;
+        if (validEmailDomain) break;
     }
 
     if (userFound) {
