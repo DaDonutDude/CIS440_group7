@@ -12,7 +12,6 @@
                     array_push($userList, [$row[0], $row[1], $row[2], $row[3]]);
                 }
                 $returnVal['result'] = $userList;
-                $conn -> close();
                 echo json_encode($returnVal);
                 break;
             case 'lockAccount' :
@@ -20,11 +19,11 @@
                 $statement = $conn -> prepare("UPDATE Users SET failedAttempts=3 WHERE username=?");
                 $statement -> bind_param('s', $username);
                 $statement -> execute();
-                $conn -> close();
                 break;
             default:
                 $returnVal['error'] = 'Not found function '.$_POST['functionname'].'!';
                 break;
         }
     }
+    $conn -> close();
 ?>

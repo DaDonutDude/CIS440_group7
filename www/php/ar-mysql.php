@@ -12,7 +12,6 @@
                     array_push($list, [$row[0], $row[1]]);
                 }
                 $returnVal['result'] = $list;
-                $conn -> close();
                 echo json_encode($returnVal);
                 break;
             case 'getEmailDomains':
@@ -21,7 +20,6 @@
                     array_push($list, [$row[0]]);
                 }
                 $returnVal['result'] = $list;
-                $conn -> close();
                 echo json_encode($returnVal);
                 break;
             case 'getPendingAccounts':
@@ -30,7 +28,6 @@
                     array_push($list, [$row[0], $row[1]]);
                 }
                 $returnVal['result'] = $list;
-                $conn -> close();
                 echo json_encode($returnVal);
                 break;
             case 'writePendingAccounts':
@@ -45,11 +42,11 @@
                 $statement = $conn -> prepare("INSERT INTO PendingAccounts (username, password, firstName, lastName, email, points, failedAttempts, isAdmin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
                 $statement -> bind_param('sssssiii', $username, $password, $firstname, $lastname, $email, $points, $failedAttempts, $isAdmin);
                 $statement -> execute();
-                $conn -> close();
                 break;
             default:
                 $returnVal['error'] = 'Not found function '.$_POST['functionname'].'!';
                 break;
         }
     }
+    $conn -> close();
 ?>
