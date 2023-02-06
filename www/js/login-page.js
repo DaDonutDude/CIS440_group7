@@ -42,20 +42,22 @@ loginButton.addEventListener("click", (e) => {
     } else if (users[idx][2] >= 3) {
       loginErrorMsg.innerHTML = 'Your account has been locked due to due many failed login attempts. Please contact the customer support team for assistance.';
       loginErrorMsg.style.opacity = 1;
-      $.ajax({
-        type: "POST",
-        url: './php/login-mysql.php',
-        dataType: 'json',
-        data: {functionname: 'lockAccount', arguments: [username]},
-        success: function (obj, textstatus) {
-                      if( ('error' in obj) ) console.log(obj.error);
-                }
-      });
     } else if (users[idx][0].toLowerCase() === username.toLowerCase() && users[idx][1] === password) {
         if (users[idx][3] == 1) window.location.href = './admin-home.html';
         else window.location.href = './user-home.html';
     } else {
         loginErrorMsg.style.opacity = 1;
         users[idx][2]++;
+        if (users[idx][2] >= 3) {
+          $.ajax({
+            type: "POST",
+            url: './php/login-mysql.php',
+            dataType: 'json',
+            data: {functionname: 'lockAccount', arguments: [username]},
+            success: function (obj, textstatus) {
+                          if( ('error' in obj) ) console.log(obj.error);
+                    }
+          });
+        }
     }
 })
