@@ -8,17 +8,51 @@ const newButton = document.getElementById("new-form-submit");
 const newErrorMsg = document.getElementById("new-error-msg");
 const validChars = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','0','1','2','3','4','5','6','7','8','9',];
 
-fetch('./users.json')
-  .then((response) => response.json())
-  .then((json) => users = json);
 
-fetch('./emaildomains.json')
-  .then((response) => response.json())
-  .then((json) => emailDomains = json);
+$.ajax({
+  type: "POST",
+  url: './php/ar-mysql.php',
+  dataType: 'json',
+  data: {functionname: 'getUsers'},
+  success: function (obj, textstatus) {
+                if( !('error' in obj) ) {
+                    users = obj.result;
+                }
+                else {
+                    console.log(obj.error);
+                }
+          }
+});
 
-if (sessionStorage.getItem('pendingAccounts') != null) {
-  pendingAccounts = JSON.parse(sessionStorage.getItem('pendingAccounts'));
-}
+$.ajax({
+  type: "POST",
+  url: './php/ar-mysql.php',
+  dataType: 'json',
+  data: {functionname: 'getEmailDomains'},
+  success: function (obj, textstatus) {
+                if( !('error' in obj) ) {
+                  emailDomains = obj.result;
+                }
+                else {
+                    console.log(obj.error);
+                }
+          }
+});
+
+$.ajax({
+  type: "POST",
+  url: './php/ar-mysql.php',
+  dataType: 'json',
+  data: {functionname: 'getPendingAccounts'},
+  success: function (obj, textstatus) {
+                if( !('error' in obj) ) {
+                  pendingAccounts = obj.result;
+                }
+                else {
+                    console.log(obj.error);
+                }
+          }
+});
 
 newButton.addEventListener("click", (e) => {
     e.preventDefault();
@@ -37,17 +71,17 @@ newButton.addEventListener("click", (e) => {
 
     
     for (let idx = 0; idx < pendingAccounts.length; idx++) {
-      if (pendingAccounts[idx].username.toLowerCase() === username.toLowerCase() || pendingAccounts[idx].email.toLowerCase() === email.toLowerCase()) {
+      if (pendingAccounts[idx][0].toLowerCase() === username.toLowerCase() || pendingAccounts[idx][1].toLowerCase() === email.toLowerCase()) {
         accountAlreadyRequested = true;
         break;
       }
     }
 
     for (let idx = 0; idx < users.length; idx++) {
-      if (users[idx].username.toLowerCase() === username.toLowerCase()) {
+      if (users[idx][0].toLowerCase() === username.toLowerCase()) {
         userFound = true;
         break;
-      } else if (users[idx].email.toLowerCase() === email.toLowerCase()) {
+      } else if (users[idx][1].toLowerCase() === email.toLowerCase()) {
         emailFound = true;
         break;
       }
@@ -59,7 +93,7 @@ newButton.addEventListener("click", (e) => {
     }
 
     for (let idx = 0; idx < emailDomains.length; idx++) {
-        validEmailDomain = email.includes(emailDomains[idx].toLowerCase());
+        validEmailDomain = email.includes(emailDomains[idx][0].toLowerCase());
         if (!validEmailDomain) break;
     }
 
@@ -79,16 +113,15 @@ newButton.addEventListener("click", (e) => {
         newErrorMsg.innerHTML = "Your email domain isn't registered in our database!";
         newErrorMsg.style.opacity = 1;
     } else {
-        pendingAccounts.push({
-          "username": username,
-          "password": password,
-          "firstname": firstName,
-          "lastname": lastName,
-          "email": email,
-          "failedAttempts": 0,
-          "isAdmin": 0
-        })
-        sessionStorage.setItem('pendingAccounts', JSON.stringify(pendingAccounts));
+      $.ajax({
+        type: "POST",
+        url: './php/ar-mysql.php',
+        dataType: 'json',
+        data: {functionname: 'writePendingAccounts', arguments: [username, password, firstName, lastName, email, 0, 0, 0]},
+        success: function (obj, textstatus) {
+                      if( ('error' in obj) ) console.log(obj.error);
+                }
+      });
         window.location.href = './new-account-confirmation.html';
       }
     }
