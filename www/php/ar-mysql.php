@@ -7,7 +7,9 @@
     if( !isset($returnVal['error']) ) {
         switch($_POST['functionname']) {
             case 'getUsers':
-                $result = $conn -> query("SELECT username, email FROM Users");
+                $statement = $conn -> prepare("SELECT username, email FROM Users");
+                $statement -> execute();
+                $result = $statement -> get_result();
                 while ($row = $result -> fetch_row()) {
                     array_push($list, [$row[0], $row[1]]);
                 }
@@ -15,7 +17,9 @@
                 echo json_encode($returnVal);
                 break;
             case 'getEmailDomains':
-                $result = $conn -> query("SELECT domains FROM EmailDomains");
+                $statement = $conn -> prepare("SELECT domains FROM EmailDomains");
+                $statement -> execute();
+                $result = $statement -> get_result();
                 while ($row = $result -> fetch_row()) {
                     array_push($list, [$row[0]]);
                 }
@@ -23,7 +27,9 @@
                 echo json_encode($returnVal);
                 break;
             case 'getPendingAccounts':
-                $result = $conn -> query("SELECT username, email FROM PendingAccounts");
+                $statement = $conn -> prepare("SELECT username, email FROM PendingAccounts");
+                $statement -> execute();
+                $result = $statement -> get_result();
                 while ($row = $result -> fetch_row()) {
                     array_push($list, [$row[0], $row[1]]);
                 }

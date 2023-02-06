@@ -7,7 +7,9 @@
     if( !isset($returnVal['error']) ) {
         switch($_POST['functionname']) {
             case 'getUsers':
-                $result = $conn -> query("SELECT username, password, failedAttempts, isAdmin FROM Users");
+                $statement = $conn -> prepare("SELECT username, password, failedAttempts, isAdmin FROM Users");
+                $statement -> execute();
+                $result = $statement -> get_result();
                 while ($row = $result -> fetch_row()) {
                     array_push($userList, [$row[0], $row[1], $row[2], $row[3]]);
                 }
