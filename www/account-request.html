@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="./css/account-request.css">
+  </head>
+  <body>
+    <main id="main-holder">
+      <h1 id="new-header">New User</h1>
+
+      <div id="new-error-msg-holder">
+        <p id="new-error-msg"></p>
+      </div>
+      
+      <form id="new-form" method="post">
+        <p>Username: <input type="text" name="username" id="username-field" class="new-form-field" required></p>
+        <p>Password: <input type="password" name="password" id="password-field" class="new-form-field" required></p>
+        <p>First Name: <input type="text" name="firstname" id="firstname-field" class="new-form-field" required></p>
+        <p>Last Name: <input type="text" name="lastname" id="lastname-field" class="new-form-field" required></p>
+        <p>Email: <input type="text" name="email" id="email-field" class="new-form-field" required></p>
+        <input type="submit" value="Submit" id="new-form-submit">
+      </form>
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="./js/account-request.js"></script>
+  </body>
+</html>
