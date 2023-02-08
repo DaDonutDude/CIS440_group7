@@ -1,7 +1,7 @@
 "use strict";
 
 let survey;
-let surveyID = sessionStorage.getItem('sessionID');
+let surveyID = sessionStorage.getItem('surveyID');
 const loadQuestion = document.getElementById('load-question');
 const surveyButton = document.getElementById("survey-form-submit");
 
