@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Settings</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+		<link rel="stylesheet" href="./css/settings-page.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<main id="main-holder">
+			<div id="setting-header">
+				Settings
+				<div>
+					<a href="user-home.html">
+					  <button class="header-button">
+					  <i class="fas fa-home"></i>
+					  </button>
+					</a>
+					<button class="header-button">
+					  <i id="logoutButton" class="fas fa-sign-out-alt"></i>
+					</button>
+				  </div>
+			</div>
+			<div class="box">
+				<p id="name">Name:</p>
+				<p id="organization">Organization:</p>
+			</div>
+			<div class="box">
+				<p id="password">Password</p>
+				<form id="password-change" method="post">
+					<p>Current Password: <input type="password" name="Current Password" id="current-password" required></p>
+					<p>New Password: <input type="password" name="New Password" id="new-password" required></p>
+					<input type="submit" value="Confirm" id="new-pw-submit">
+				</form>
+			</div>
+		</main>
+	</body>
+</html>
+</html>
