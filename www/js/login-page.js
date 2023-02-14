@@ -138,22 +138,17 @@ loginButton.addEventListener("click", (e) => {
   } else if (users[0].toLowerCase() === username.toLowerCase() && users[1] === password) {
 
       //hides login page
-      document.getElementById("login_page").style.display = "none";
+
 
       //if admin - launch admin page
       if (users[5] == 1) {
-        document.getElementById("admin_home").style.display = "inline";
-        document.getElementById("a_personalized_intro").innerHTML = "Hello Admin " + username +"!";
+
       }
       //otherwise go to user home page
       else{
-        document.getElementById("user_home").style.display = "block";
-        document.getElementById("u_personalized_intro").innerHTML = "Hello " + fname +"!";
-        document.getElementById("user_points").innerHTML = "You have " + points + " points!";
-        document.getElementById("user_settings_button").style.display = "inline";
 
         if (surveys_ready > 0) {
-          document.getElementById("survey_button").style.display = "inline";
+
         }
 
       }
