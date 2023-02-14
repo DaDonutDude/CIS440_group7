@@ -142,11 +142,11 @@ loginButton.addEventListener("click", (e) => {
 
       //if admin - launch admin page
       if (users[5] == 1) {
-
+          console.log(users);
       }
       //otherwise go to user home page
       else{
-
+console.log(users);
         if (surveys_ready > 0) {
 
         }
