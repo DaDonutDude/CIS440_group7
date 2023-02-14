@@ -41,6 +41,14 @@
                 $returnVal['result'] = $survey;
                 echo json_encode($returnVal);
                 break;
+            case 'writeSurvey':
+                $surveyID = $_POST['arguments'][0];
+                $username = $_POST['arguments'][1];
+                $answer = $_POST['arguments'][2];
+                $statement = $conn -> prepare("INSERT INTO CompletedSurveys (surveyID, username, answer) VALUES (?, ?, ?)");
+                $statement -> bind_param('iss', $surveyID, $username, $answer);
+                $statement -> execute();
+                break;
             default:
                 $returnVal['error'] = 'Not found function '.$_POST['functionname'].'!';
                 break;

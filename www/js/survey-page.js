@@ -99,7 +99,15 @@ surveyButton.addEventListener("click", (e) => {
             break;
     }
     if (answer != null) {
-        sessionStorage.setItem('answer', answer);
+        $.ajax({
+            type: "POST",
+            url: './php/login-mysql.php',
+            dataType: 'json',
+            data: {functionname: 'lockAccount', arguments: [surveyID ,username, answer]},
+            success: function (obj, textstatus) {
+                          if( ('error' in obj) ) console.log(obj.error);
+                    }
+        });
         window.location.href = './survey-complete.html';
     }
 });
