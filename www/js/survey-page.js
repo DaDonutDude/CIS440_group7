@@ -2,6 +2,7 @@
 
 let survey;
 let surveyID = sessionStorage.getItem('surveyID');
+let username = sessionStorage.getItem('token');
 const loadQuestion = document.getElementById('load-question');
 const surveyButton = document.getElementById("survey-form-submit");
 
@@ -101,9 +102,9 @@ surveyButton.addEventListener("click", (e) => {
     if (answer != null) {
         $.ajax({
             type: "POST",
-            url: './php/login-mysql.php',
+            url: './php/survey-mysql.php',
             dataType: 'json',
-            data: {functionname: 'lockAccount', arguments: [surveyID ,username, answer]},
+            data: {functionname: 'writeSurvey', arguments: [surveyID, username, answer]},
             success: function (obj, textstatus) {
                           if( ('error' in obj) ) console.log(obj.error);
                     }
