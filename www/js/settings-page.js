@@ -1,46 +1,33 @@
 "use strict";
-let userFound = false;
-let username = "user";
-let password = "password";
-let fname = "USER";
-let lname = "DEMO";
-let email = "demo.user@asu.edu";
-let points = 50;
-let f_attempts = 0;
-let adm_status = 0;
-let org = "ASU";
 
-const users = {};
-users['username'] = username;
-users['password'] = password;
-//first name
-users['firstname'] = fname;
-//last name
-users['lastname'] = lname;
-users['email'] = email;
-//points
-users['points'] = points;
-//failed attempts
-users['failedAttempts'] = f_attempts;
-//is admin  
-users['adminStatus'] = adm_status;
-users['organization'] = org;
-
-// dummy user variables 
-
-const settingsNameLabel = document.getElementById("name");
-const orgLabel = document.getElementById("organization");
-const currentPasswordField = document.getElementById("current-password");
-const newPasswordField = document.getElementById("new-password");
+let user;
+let settingsNameLabel = document.getElementById("name");
+let orgLabel = document.getElementById("organization");
+let currentPasswordField = document.getElementById("current-password");
+let newPasswordField = document.getElementById("new-password");
 const passwordResetButton = document.getElementById("new-pw-submit");
 
-// this grabs the first & last name variables and displays it next to the name label, therefore displaying the user's name
-// i would like for it to grab the user's first and last name from the database and display
-settingsNameLabel.innerHTML += " " + users.firstname + " " + users.lastname;
+$.ajax({
+    type: "POST",
+    url: './php/settings-mysql.php',
+    dataType: 'json',
+    data: {functionname: 'getUser', arguments: [sessionStorage.getItem('token')]},
+    success: function (obj, textstatus) {
+                  if( !('error' in obj) ) {
+                        user = obj.result;
+                        // this grabs the first & last name variables and displays it next to the name label, therefore displaying the user's name
+                        // i would like for it to grab the user's first and last name from the database and display
+                        settingsNameLabel.innerHTML += " " + user[0][2] + " " + user[0][3];
 
-// this grabs the organization variable and displays it next to the organization label, therefore displaying the user's org
-// i would like for it to grab the user's org from the database and display
-orgLabel.innerHTML += " " + users.organization;
+                        // this grabs the organization variable and displays it next to the organization label, therefore displaying the user's org
+                        // i would like for it to grab the user's org from the database and display
+                        orgLabel.innerHTML += " " + user[0][8];
+                  }
+                  else {
+                      console.log(obj.error);
+                  }
+            }
+  });
 
 // this checks the current and new password fields everytime the button is pressed
 passwordResetButton.addEventListener("click", (e) => {
@@ -51,7 +38,7 @@ passwordResetButton.addEventListener("click", (e) => {
     const newPassword = newPasswordField.value;
 
     // checking to make sure the current password that the user entered matches their password tied to their account in the "database"
-    if (currentPassword !== users.password) {
+    if (currentPassword !== user[0][1]) {
         alert("Must enter correct current password to update new password.");
         clearPasswordFields();
         return;
@@ -69,7 +56,16 @@ passwordResetButton.addEventListener("click", (e) => {
         return;
     }
     // if all requirements met, we change the user's password in the database to the new password they input
-    users.password = newPassword;
+    user[0][1] = newPassword;
+    $.ajax({
+        type: "POST",
+        url: './php/settings-mysql.php',
+        dataType: 'json',
+        data: {functionname: 'updatePassword', arguments: [sessionStorage.getItem('token'), user[0][1]]},
+        success: function (obj, textstatus) {
+                      if( ('error' in obj) ) console.log(obj.error);
+                }
+      });
     console.log(currentPassword + " has now been updated to: " + newPassword);
     alert("Password successfully updated!");
     clearPasswordFields();
