@@ -1,45 +1,28 @@
 <?php
     header('Content-Type: application/json');
     $returnVal = array();
-    $survey = array();
+    $user = array();
     $conn = new mysqli("107.180.1.16", "springa2023team7", "springa2023team7", "springa2023team7");
     if( !isset($_POST['functionname']) ) { $returnVal['error'] = 'No function name!'; }
     if( !isset($returnVal['error']) ) {
         switch($_POST['functionname']) {
-            case 'writeMultipleChoice':
-                $surveyType = 'multiplechoice';
-                $surveyPoints = 50;
-                $multipleChoice = $_POST['arguments'][0];
-                $statement = $conn -> prepare("INSERT INTO Surveys (surveytype, surveypoints, survey) VALUES (?, ?, ?)");
-                $statement -> bind_param('sis', $surveyType, $surveyPoints, $multipleChoice);
-                $statement -> execute();
-                break;
-            case 'writeNumericalScale':
-                $surveyType = 'numericalscale';
-                $surveyPoints = 50;
-                $numericalScale = $_POST['arguments'][0];
-                $statement = $conn -> prepare("INSERT INTO Surveys (surveytype, surveypoints, survey) VALUES (?, ?, ?)");
-                $statement -> bind_param('sis', $surveyType, $surveyPoints, $numericalScale);
-                $statement -> execute();
-                break;
-            case 'writeShortAnswer':
-                $surveyType = 'shortanswer';
-                $surveyPoints = 100;
-                $shortAnswer = $_POST['arguments'][0];
-                $statement = $conn -> prepare("INSERT INTO Surveys (surveytype, surveypoints, survey) VALUES (?, ?, ?)");
-                $statement -> bind_param('sis', $surveyType, $surveyPoints, $shortAnswer);
-                $statement -> execute();
-                break;
-            case 'pullSurvey':
-                $surveyID = $_POST['arguments'][0];
-                $statement = $conn -> prepare("SELECT * FROM Surveys WHERE surveyID=?");
-                $statement -> bind_param('i', $surveyID);
+            case 'getUser':
+                $username = $_POST['arguments'][0];
+                $statement = $conn -> prepare("SELECT * FROM Users WHERE username=?");
+                $statement -> bind_param('s', $username);
                 $statement -> execute();
                 $result = $statement -> get_result();
                 $row = $result -> fetch_row();
-                array_push($survey, [$row[0], $row[1], $row[2], $row[3]]);
-                $returnVal['result'] = $survey;
+                array_push($user, [$row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8]]);
+                $returnVal['result'] = $user;
                 echo json_encode($returnVal);
+                break;
+            case 'updatePassword':
+                $username = $_POST['arguments'][0];
+                $password = $_POST['arguments'][1];
+                $statement = $conn -> prepare("UPDATE Users SET password=? WHERE username=?");
+                $statement -> bind_param('ss', $password, $username);
+                $statement -> execute();
                 break;
             default:
                 $returnVal['error'] = 'Not found function '.$_POST['functionname'].'!';
