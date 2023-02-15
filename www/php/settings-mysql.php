@@ -8,12 +8,12 @@
         switch($_POST['functionname']) {
             case 'getUser':
                 $username = $_POST['arguments'][0];
-                $statement = $conn -> prepare("SELECT * FROM Users WHERE username=?");
+                $statement = $conn -> prepare("SELECT password, firstName, lastName, Company FROM Users WHERE username=?");
                 $statement -> bind_param('s', $username);
                 $statement -> execute();
                 $result = $statement -> get_result();
                 $row = $result -> fetch_row();
-                array_push($user, [$row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8]]);
+                array_push($user, [$row[0], $row[1], $row[2], $row[3]]);
                 $returnVal['result'] = $user;
                 echo json_encode($returnVal);
                 break;
