@@ -17,11 +17,11 @@ $.ajax({
                         user = obj.result;
                         // this grabs the first & last name variables and displays it next to the name label, therefore displaying the user's name
                         // i would like for it to grab the user's first and last name from the database and display
-                        settingsNameLabel.innerHTML += " " + user[0][2] + " " + user[0][3];
+                        settingsNameLabel.innerHTML += " " + user[0][1] + " " + user[0][2];
 
                         // this grabs the organization variable and displays it next to the organization label, therefore displaying the user's org
                         // i would like for it to grab the user's org from the database and display
-                        orgLabel.innerHTML += " " + user[0][8];
+                        orgLabel.innerHTML += " " + user[0][3];
                   }
                   else {
                       console.log(obj.error);
@@ -38,7 +38,7 @@ passwordResetButton.addEventListener("click", (e) => {
     const newPassword = newPasswordField.value;
 
     // checking to make sure the current password that the user entered matches their password tied to their account in the "database"
-    if (currentPassword !== user[0][1]) {
+    if (currentPassword !== user[0][0]) {
         alert("Must enter correct current password to update new password.");
         clearPasswordFields();
         return;
@@ -56,12 +56,12 @@ passwordResetButton.addEventListener("click", (e) => {
         return;
     }
     // if all requirements met, we change the user's password in the database to the new password they input
-    user[0][1] = newPassword;
+    user[0][0] = newPassword;
     $.ajax({
         type: "POST",
         url: './php/settings-mysql.php',
         dataType: 'json',
-        data: {functionname: 'updatePassword', arguments: [sessionStorage.getItem('token'), user[0][1]]},
+        data: {functionname: 'updatePassword', arguments: [sessionStorage.getItem('token'), user[0][0]]},
         success: function (obj, textstatus) {
                       if( ('error' in obj) ) console.log(obj.error);
                 }
