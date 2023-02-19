@@ -9,10 +9,10 @@
   <body>
     <div class="header">
       <div id=points>
-        Total Points: 100
+        Total Points: <div id="total-points">100</div>
       </div>
       <div>
-        <a href="settings.html">
+        <a href="./settings.html">
           <button class="header-button">
           <i class="fas fa-wrench"></i>
           </button>
@@ -24,13 +24,21 @@
     </div>
     <div class="main-section">
       <div class="box">
-        <h2>Welcome Back, xxx</h2>
+        <h2 id="welcome">Welcome Back<div id="home-name">xxx</div></h2>
         <p>You haven't taken your daily survey!</p>
-        <button id="surveyButton">Take Survey</button>
+        <a href="./survey-page.html"><button id="surveyButton">Take Survey</button></a>
+      </div>
+
+      <div class="box">
+        <h2>Feedback</h2>
+        <p>We appreciate your feedback. Please let us know how we can improve:</p>
+        <form>
+          <textarea id="feedback-textarea" rows="4" cols="50"></textarea>
+          <br>
+          <button id="submit-feedback-button">Submit Feedback</button>
+        </form>
       </div>
     </div>
-
-
     <script src="./js/home-page.js"></script>
 
   </body>

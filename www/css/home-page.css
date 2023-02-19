@@ -37,6 +37,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   height: calc(100vh - 70px);
 }
 
@@ -44,19 +45,18 @@ body {
   background-color: #fff;
   width: 500px;
   height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
   text-align: center;
   border-radius: 10px;
   box-shadow: 2px 2px 5px #3e6cbf;
   padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 h2 {
   color: #3e6cbf;
   font-size: 24px;
+  padding-top: 20px;
   margin: 0;
   padding-bottom: 20px;
 }
@@ -81,4 +81,12 @@ button {
 #points {
   color: #fff;
   font-size: 18px;
+}
+
+#submit-feedback-button{
+  margin-top: 20px;
+}
+
+#welcome{
+  margin-bottom:35px;
 }
