@@ -1,6 +1,7 @@
 "use strict"
 
 let points;
+let log;
 let survey_complete_div = document.getElementById('survey_complete_div');
 let user_points_div = document.getElementById('user_points_div');
 let error_div = document.getElementById('error_div');
@@ -27,13 +28,10 @@ function set_survey_type(type) {
             points = 0;
             break;
         }
-
-
     error_div.style.visibility = 'hidden';
     console.log("You have earned " + points + " points");
     total_points += points;
     update_html();
-    
 }
 
 function update_html() {
@@ -43,12 +41,11 @@ function update_html() {
     document.getElementById('points_earned').innerHTML = points;
     document.getElementById('user').innerHTML = username;
     document.getElementById('user_total_points').innerHTML = total_points;
-
     update_log();
 }
 
 function update_log() {
-    let log = JSON.parse(sessionStorage.getItem('point_log'));
+    log = JSON.parse(sessionStorage.getItem('point_log'));
     log.push(points);
     sessionStorage.setItem('point_log', JSON.stringify(log));
     console.log(JSON.parse(sessionStorage.getItem('point_log')));
