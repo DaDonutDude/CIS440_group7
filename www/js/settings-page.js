@@ -6,6 +6,7 @@ let orgLabel = document.getElementById("organization");
 let currentPasswordField = document.getElementById("current-password");
 let newPasswordField = document.getElementById("new-password");
 const passwordResetButton = document.getElementById("new-pw-submit");
+const logoutButton = document.getElementById("logout-button");
 
 $.ajax({
     type: "POST",
@@ -28,6 +29,13 @@ $.ajax({
                   }
             }
   });
+
+
+// this brings the user back to the login page and resets session storage, essentially "logging" them out
+logoutButton.addEventListener("click", (event) => {
+    sessionStorage.clear()
+});
+
 
 // this checks the current and new password fields everytime the button is pressed
 passwordResetButton.addEventListener("click", (e) => {
