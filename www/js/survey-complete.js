@@ -4,10 +4,12 @@ let points;
 let survey_complete_div = document.getElementById('survey_complete_div');
 let user_points_div = document.getElementById('user_points_div');
 let error_div = document.getElementById('error_div');
+let home_div = document.getElementById('to_home_div');
 
 survey_complete_div.style.visibility = 'hidden';
 user_points_div.style.visibility = 'hidden';
 error_div.style.visibility = 'hidden';
+home_div.style.visibility = 'hidden';
 
 //swap 'type' for survey[1] which should access the type of survey from survey-page.js line 16
 function set_survey_type(type) {
@@ -26,26 +28,18 @@ function set_survey_type(type) {
             break;
         }
 
-    // this should probably check for surveyID from database 
-    if (survey_log.includes(type)) {
-        survey_complete_div.style.visibility = 'hidden';
-        user_points_div.style.visibility = 'hidden';
-        error_div.style.visibility = 'visible';
-        error_div.innerHTML = "You have already taken this survey. No additional points have been added. ";
-    } else {
-        error_div.style.visibility = 'hidden';
-        survey_log.push(type);
-        sessionStorage.setItem('survey_log', JSON.stringify(type));
-        console.log("You have earned " + points + " points");
-        total_points += points;
-        update_html();
-    }
+
+    error_div.style.visibility = 'hidden';
+    console.log("You have earned " + points + " points");
+    total_points += points;
+    update_html();
     
 }
 
 function update_html() {
     survey_complete_div.style.visibility = 'visible';
     user_points_div.style.visibility = 'visible';
+    home_div.style.visibility = 'visible';
     document.getElementById('points_earned').innerHTML = points;
     document.getElementById('user').innerHTML = username;
     document.getElementById('user_total_points').innerHTML = total_points;
