@@ -100,6 +100,7 @@ surveyButton.addEventListener("click", (e) => {
             break;
     }
     if (answer != null) {
+        sessionStorage.setItem('points', survey[2]);
         $.ajax({
             type: "POST",
             url: './php/survey-mysql.php',

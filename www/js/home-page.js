@@ -9,6 +9,7 @@ let points = 50;
 let f_attempts = 0;
 let adm_status = 0;
 let org = "ASU";
+
 let feedbackID = 0;
 
 // dummy users database
@@ -105,3 +106,16 @@ feedbackButton.addEventListener("click", (e) => {
 logoutButton.addEventListener("click", (event) => {
     sessionStorage.clear();
 });
+
+// dummy user variables 
+const homepageNameLabel = document.getElementById("home-name");
+const userTotalPoints = document.getElementById("total-points");
+
+// this grabs the first & last name variables and displays it after 'welcome', therefore displaying the user's name
+// i would like for it to grab the user's first and last name from the database and display
+homepageNameLabel.innerHTML = users.firstname + " " + users.lastname;
+
+// this grabs the user's points variable and displays it next to the total points label, therefore displaying the user's total points
+// i would like for it to grab the user's total points from the database and display
+userTotalPoints.innerHTML = users.points;
+
