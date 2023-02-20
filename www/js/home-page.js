@@ -55,9 +55,9 @@ userTotalPoints.innerHTML = users.points;
 // available surveys text section: I would like the server side function to able to check what surveys the current logged in user has completed (through the completed surveys table?) and then display text according to which ones they have no completed
 
 //this is a dummy variable that shows which surveys the user has completed
-completedSurvey[username]['surveysCompleted'] = [1,2,3];
+completedSurvey[username]['surveysCompleted'] = [1,3];
 // filler text for the available surveys field
-let availableSurveysText = "Surveys available: ";
+let availableSurveysText = "Surveys available:<br>";
 // boolean to check whether all surveys have been taken or not
 let allSurveysTaken = true
 
@@ -107,15 +107,4 @@ logoutButton.addEventListener("click", (event) => {
     sessionStorage.clear();
 });
 
-// dummy user variables 
-const homepageNameLabel = document.getElementById("home-name");
-const userTotalPoints = document.getElementById("total-points");
-
-// this grabs the first & last name variables and displays it after 'welcome', therefore displaying the user's name
-// i would like for it to grab the user's first and last name from the database and display
-homepageNameLabel.innerHTML = users.firstname + " " + users.lastname;
-
-// this grabs the user's points variable and displays it next to the total points label, therefore displaying the user's total points
-// i would like for it to grab the user's total points from the database and display
-userTotalPoints.innerHTML = users.points;
 
