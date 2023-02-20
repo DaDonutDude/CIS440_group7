@@ -1,7 +1,9 @@
 "use strict"
 
 let points;
+let total_points;
 let log;
+let username = sessionStorage.getItem('token');
 let survey_complete_div = document.getElementById('survey_complete_div');
 let user_points_div = document.getElementById('user_points_div');
 let error_div = document.getElementById('error_div');
@@ -12,25 +14,24 @@ user_points_div.style.visibility = 'hidden';
 error_div.style.visibility = 'hidden';
 home_div.style.visibility = 'hidden';
 
-//swap 'type' for survey[1] which should access the type of survey from survey-page.js line 16
-function set_survey_type(type) {
-    switch (type) {
-        case 'multiplechoice':
-            points = 50;
-            break;
-        case 'numericalscale':
-            points = 50;
-            break;
-        case 'shortanswer':
-            points = 100;
-            break;
-        default:
-            points = 0;
-            break;
-        }
+$.ajax({
+    type: "POST",
+    url: './php/survey-complete-mysql.php',
+    dataType: 'json',
+    data: {functionname: 'getPoints', arguments: [username]},
+    success: function (obj, textstatus) {
+                  if( ('error' in obj) ) console.log(obj.error);
+                  total_points = obj.result[0][0];
+                  set_survey_type();
+            }
+});
+
+function set_survey_type() {
+    points = sessionStorage.getItem('points');
+    sessionStorage.removeItem('points');
     error_div.style.visibility = 'hidden';
     console.log("You have earned " + points + " points");
-    total_points += points;
+    total_points = parseInt(total_points) + parseInt(points);
     update_html();
 }
 
@@ -52,11 +53,20 @@ function update_log() {
     update_database();
 }
 
-//this needs pushed to database
 function update_database() {
-    sessionStorage.setItem("total_points", total_points);
+    $.ajax({
+        type: "POST",
+        url: './php/survey-complete-mysql.php',
+        dataType: 'json',
+        data: {functionname: 'updatePoints', arguments: [username, total_points]},
+        success: function (obj, textstatus) {
+                      if( ('error' in obj) ) console.log(obj.error);
+                }
+    });
+    take_me_home();
 }
 
-function take_me_home() {
+async function take_me_home() {
+    await new Promise(r => setTimeout(r, 5000))
     window.location.href = "./user-home.html";
 }
