@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Create Survey</title>
+        <link rel="stylesheet" href="./css/survey-creation.css">
+    </head>
+    <body>
+        <main id="main-holder">
+            <h1 id="new-header">Survey Creation</h1>
+            <form id="form-holder" method="post">
+                <div>
+                    <input type="radio" id="multiplechoice" name="surveyType" value="multiplechoice">
+                    <label for="multiplechoice">Multiple Choice</label>
+                    <input type="radio" id="numericalscale" name="surveyType" value="numericalscale">
+                    <label for="numericalscale">Numerical Scale</label>
+                    <input type="radio" id="shortanswer" name="surveyType" value="shortanswer">
+                    <label for="shortanswer">Short Answer</label>
+                </div>
+                <br>
+                <div>
+                    <textarea id="survey-text" value="" placeholder="Write your question here. Separate questions and answer with a new line. Multiple choice should have five possible answers."></textarea>
+                </div>
+                <br>
+                <div>
+                    <input type="submit" value="Submit" id="survey-create-submit">
+                </div>
+            </form>
+        </main>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script src="./js/survey-creation.js"></script>
+    </body>
+</html>
