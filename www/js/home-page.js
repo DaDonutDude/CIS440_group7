@@ -78,7 +78,7 @@ let surveyTypeButtons = document.getElementById("surveyTypeButtons");
 		}
 
 if (surveys.length > 0){
-    availableSurveys.innerHTML = "You have Surveys Available!"
+    availableSurveys.innerHTML = "You have surveys available!"
 }
 
 // this listens for the user to click the 'submit feedback' button and then adds it to the feedback dictionary as "answer". it also takes the feedbackID and increments it by 1 and adds it to the feedback dictionary as "feedbackID"
