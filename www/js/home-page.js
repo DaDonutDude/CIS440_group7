@@ -56,18 +56,18 @@ userTotalPoints.innerHTML = users.points;
 
 let surveys = [
     {
-        id: 1, surveytype: 'MC', surveypoints: 50, survey: "This is a MC question"
+        id: 1, surveytype: 'MC', surveypoints: 50, survey: "This is a MC question", answer: ""
     },
     {
-        id: 2, surveytype: 'NS', surveypoints: 50, survey: "This is a NS question"
+        id: 2, surveytype: 'NS', surveypoints: 50, survey: "This is a NS question", answer: ""
     },
     {
-        id: 3, surveytype: 'SA', surveypoints: 50, survey: "This is a SA question"
+        id: 3, surveytype: 'SA', surveypoints: 50, survey: "This is a SA question", answer: ""
     }
 ];
 
 let surveyTypeButtons = document.getElementById("surveyTypeButtons");
-		for (let i = 0; (i < surveys.length && i < 5); i++) {
+		for (let i = 0; (i < surveys.length && i <= 5); i++) {
 		  let button = document.createElement("button");
 		  button.innerHTML = surveys[i].surveytype;
 		  button.onclick = function() {
@@ -77,7 +77,9 @@ let surveyTypeButtons = document.getElementById("surveyTypeButtons");
 		  surveyTypeButtons.appendChild(button);
 		}
 
-
+if (surveys.length > 0){
+    availableSurveys.innerHTML = "You have Surveys Available!"
+}
 
 // this listens for the user to click the 'submit feedback' button and then adds it to the feedback dictionary as "answer". it also takes the feedbackID and increments it by 1 and adds it to the feedback dictionary as "feedbackID"
 // i would like this to save whatever is in the feedbackField into the Feedback database while also checking to see what the last feedbackID is and incrementing by 1 before adding 
