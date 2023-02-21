@@ -54,40 +54,29 @@ userTotalPoints.innerHTML = users.points;
 
 // available surveys text section: I would like the server side function to able to check what surveys the current logged in user has completed (through the completed surveys table?) and then display text according to which ones they have no completed
 
-//this is a dummy variable that shows which surveys the user has completed
-completedSurvey[username]['surveysCompleted'] = [1,3];
-// filler text for the available surveys field
-let availableSurveysText = "Surveys available:<br>";
-// boolean to check whether all surveys have been taken or not
-let allSurveysTaken = true
+let surveys = [
+    {
+        id: 1, surveytype: 'MC', surveypoints: 50, survey: "This is a MC question"
+    },
+    {
+        id: 2, surveytype: 'NS', surveypoints: 50, survey: "This is a NS question"
+    },
+    {
+        id: 3, surveytype: 'SA', surveypoints: 50, survey: "This is a SA question"
+    }
+];
 
+let surveyTypeButtons = document.getElementById("surveyTypeButtons");
+		for (let i = 0; (i < surveys.length && i < 5); i++) {
+		  let button = document.createElement("button");
+		  button.innerHTML = surveys[i].surveytype;
+		  button.onclick = function() {
+            window.location.href = "survey-page.html";
+            //alert("Survey Type: " + surveys[i].surveytype);
+		  };
+		  surveyTypeButtons.appendChild(button);
+		}
 
-// checks if the survey has completed survey type 1; addss the multiple choice text to the available surveys text variable and changes allSurveysTaken to false
-if (!(completedSurvey[username]['surveysCompleted'] || []).includes(1)){
-    
-    availableSurveysText = availableSurveysText + "<br>Multiple Choice "
-    allSurveysTaken = false
-}
-// checks if the survey has completed survey type 2; addss the numerical scale text to the available surveys text variable and changes allSurveysTaken to false
-if (!(completedSurvey[username]['surveysCompleted'] || []).includes(2)){
-
-    availableSurveysText = availableSurveysText + "<br>Numerical Scale "
-    allSurveysTaken = false
-}
-// checks if the survey has completed survey type 3; addss the short answer text to the available surveys text variable and changes allSurveysTaken to false
-if (!(completedSurvey[username]['surveysCompleted'] || []).includes(3)){
-    
-    availableSurveysText = availableSurveysText + "<br>Short Answer "
-    allSurveysTaken = false
-}
-
-// checks to see if allSurveysTaken is still true and if it is changes the surveys text variable to show they have no available surveys
-if (allSurveysTaken == true){
-    availableSurveysText = "You've completed all available surveys!"
-}
-
-//changes the available survey field to the text variable
-availableSurveys.innerHTML = availableSurveysText
 
 
 // this listens for the user to click the 'submit feedback' button and then adds it to the feedback dictionary as "answer". it also takes the feedbackID and increments it by 1 and adds it to the feedback dictionary as "feedbackID"
