@@ -43,7 +43,6 @@ $.ajax({
   type: "POST",
   url: './php/ar-mysql.php',
   dataType: 'json',
-  async: false,
   data: {functionname: 'getPendingAccounts'},
   success: function (obj, textstatus) {
                 if( !('error' in obj) ) {
