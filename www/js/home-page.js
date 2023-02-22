@@ -12,25 +12,16 @@ const feedbackButton = document.getElementById("submit-feedback-button");
 const currentFeedbackField = document.getElementById("feedback-textarea");
 const availableSurveys = document.getElementById("available-surveys")
 
-// this grabs the first & last name variables and displays it after 'welcome', therefore displaying the user's name
-// i would like for it to grab the user's first and last name from the database and display
-homepageNameLabel.innerHTML = users.firstname + " " + users.lastname;
-
-// this grabs the user's points variable and displays it next to the total points label, therefore displaying the user's total points
-// i would like for it to grab the user's total points from the database and display
-userTotalPoints.innerHTML = users.points;
-
-// available surveys text section: I would like the server side function to able to check what surveys the current logged in user has completed (through the completed surveys table?) and then display text according to which ones they have no completed
-
 $.ajax({
     type: "POST",
     url: './php/home-page-mysql.php',
     dataType: 'json',
-    async: false,
-    data: { functionname: 'getSurveys' },
+    data: { functionname: 'getUser', arguments: [username] },
     success: function (obj, textstatus) {
         if (!('error' in obj)) {
-            surveys = obj.result;
+            user = obj.result;
+            homepageNameLabel.innerHTML = user[0][0] + " " + user[0][1];
+            userTotalPoints.innerHTML = user[0][2];
         }
         else {
             console.log(obj.error);
@@ -54,11 +45,61 @@ $.ajax({
 });
 
 
+$.ajax({
+    type: "POST",
+    url: './php/home-page-mysql.php',
+    dataType: 'json',
+    async: false,
+    data: { functionname: 'getSurveys' },
+    success: function (obj, textstatus) {
+        if (!('error' in obj)) {
+            surveys = obj.result;
+        }
+        else {
+            console.log(obj.error);
+        }
+    }
+});
 
 
-if (surveys.length > 0){
-    availableSurveys.innerHTML = "You have surveys available!"
-}
+window.onload = (e) => {
+    let surveyTypeButtons = document.getElementById("surveyTypeButtons");
+    console.log(surveys.length);
+    console.log(completedSurveys.length);
+    if (completedSurveys.length < surveys.length) {
+        availableSurveys.innerHTML = "You have surveys available!"
+        let takenSurveys = [];
+        for (let idx = 0; idx < completedSurveys.length; idx++) {
+            takenSurveys.push(parseInt(completedSurveys[idx]));
+        }
+        console.log(takenSurveys);
+        for (let idx = 0; idx < surveys.length; idx++) {
+            if (!takenSurveys.includes(parseInt(surveys[idx][0]))) {
+                let button = document.createElement("button");
+                switch (surveys[idx][1]) {
+                    case 'multiplechoice':
+                        button.innerHTML = 'Multiple Choice';
+                        break;
+                    case 'numericalscale':
+                        button.innerHTML = 'Numerical Scale';
+                        break;
+                    default:
+                        button.innerHTML = 'Short Answer';
+                        break;
+                }
+                button.onclick = function () {
+                    sessionStorage.setItem('surveyID', surveys[idx][0]);
+                    window.location.href = "survey-page.html";
+                };
+                surveyTypeButtons.appendChild(button);
+            }
+        }
+    } else {
+        availableSurveys.innerHTML = "Congratulations! You've completed this week's surveys!"
+    }
+};
+
+
 
 // this listens for the user to click the 'submit feedback' button and then adds it to the feedback dictionary as "answer". it also takes the feedbackID and increments it by 1 and adds it to the feedback dictionary as "feedbackID"
 // i would like this to save whatever is in the feedbackField into the Feedback database while also checking to see what the last feedbackID is and incrementing by 1 before adding 
