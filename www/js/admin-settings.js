@@ -6,7 +6,20 @@ let user;
 const username = document.getElementById('username');
 const password = document.getElementById('new-password');
 const downloadButton = document.getElementById('download-surveys');
+const createButton = document.getElementById('create-surveys');
 const changePasswordButton = document.getElementById('new-pw-submit');
+const logoutButton = document.getElementById("logout-button");
+
+logoutButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    sessionStorage.clear();
+    window.location.href = './login-page.html';
+});
+
+createButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = './survey-creation.html';
+})
 
 downloadButton.addEventListener('click', (e) => {
     e.preventDefault();

@@ -98,7 +98,7 @@ window.onload = (e) => {
 };
 
 // this listens for the user to click the 'logout' button and then takes the user back to the login page while also clearing sessionStorage
-logoutButton.addEventListener("click", (event) => {
+logoutButton.addEventListener("click", (e) => {
     e.preventDefault();
     sessionStorage.clear();
     window.location.href = './login-page.html';

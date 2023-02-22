@@ -44,7 +44,10 @@ loginButton.addEventListener("click", (e) => {
       loginErrorMsg.style.opacity = 1;
     } else if (users[idx][0].toLowerCase() === username.toLowerCase() && users[idx][1] === password) {
         sessionStorage.setItem('token', username);
-        if (users[idx][3] == 1) window.location.href = './admin-home.html';
+        if (users[idx][3] == 1) {
+          sessionStorage.setItem('admin', true);
+          window.location.href = './admin-home.html';
+        }
         else window.location.href = './user-home.html';
     } else {
         loginErrorMsg.style.opacity = 1;
