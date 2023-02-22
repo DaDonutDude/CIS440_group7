@@ -10,6 +10,7 @@ $.ajax({
     type: "POST",
     url: './php/survey-mysql.php',
     dataType: 'json',
+    async: false,
     data: {functionname: 'pullSurvey', arguments: [surveyID]},
     success: function (obj, textstatus) {
                 if( !('error' in obj) ) {

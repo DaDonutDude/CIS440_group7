@@ -12,6 +12,7 @@ $.ajax({
     type: "POST",
     url: './php/settings-mysql.php',
     dataType: 'json',
+    async: false,
     data: {functionname: 'getUser', arguments: [sessionStorage.getItem('token')]},
     success: function (obj, textstatus) {
                   if( !('error' in obj) ) {
