@@ -1,133 +1,128 @@
 "use strict";
-let userFound = false;
-let user;
-let completedSurveys;
-let surveys;
-let feedback;
-let username = sessionStorage.getItem('token');
-const homepageNameLabel = document.getElementById("home-name");
-const userTotalPoints = document.getElementById("total-points");
-const logoutButton = document.getElementById("logout-button");
-const feedbackButton = document.getElementById("submit-feedback-button");
-const currentFeedbackField = document.getElementById("feedback-textarea");
-const availableSurveys = document.getElementById("available-surveys")
 
-$.ajax({
-    type: "POST",
-    url: './php/home-page-mysql.php',
-    dataType: 'json',
-    data: { functionname: 'getUser', arguments: [username] },
-    success: function (obj, textstatus) {
-        if (!('error' in obj)) {
-            user = obj.result;
-            homepageNameLabel.innerHTML = user[0][0] + " " + user[0][1];
-            userTotalPoints.innerHTML = user[0][2];
-        }
-        else {
-            console.log(obj.error);
-        }
-    }
-});
-
-$.ajax({
-    type: "POST",
-    url: './php/home-page-mysql.php',
-    dataType: 'json',
-    data: { functionname: 'getCompletedSurveys', arguments: [username] },
-    success: function (obj, textstatus) {
-        if (!('error' in obj)) {
-            completedSurveys = obj.result;
-        }
-        else {
-            console.log(obj.error);
-        }
-    }
-});
+let users;
+let emailDomains;
+let pendingAccounts = [];
+const newForm = document.getElementById("new-form");
+const newButton = document.getElementById("new-form-submit");
+const newErrorMsg = document.getElementById("new-error-msg");
+const validChars = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','0','1','2','3','4','5','6','7','8','9',];
 
 
 $.ajax({
-    type: "POST",
-    url: './php/home-page-mysql.php',
-    dataType: 'json',
-    async: false,
-    data: { functionname: 'getSurveys' },
-    success: function (obj, textstatus) {
-        if (!('error' in obj)) {
-            surveys = obj.result;
-        }
-        else {
-            console.log(obj.error);
-        }
-    }
-});
-
-
-window.onload = (e) => {
-    let surveyTypeButtons = document.getElementById("surveyTypeButtons");
-    console.log(surveys.length);
-    console.log(completedSurveys.length);
-    if (completedSurveys.length < surveys.length) {
-        availableSurveys.innerHTML = "You have surveys available!"
-        let takenSurveys = [];
-        for (let idx = 0; idx < completedSurveys.length; idx++) {
-            takenSurveys.push(parseInt(completedSurveys[idx]));
-        }
-        console.log(takenSurveys);
-        for (let idx = 0; idx < surveys.length; idx++) {
-            if (!takenSurveys.includes(parseInt(surveys[idx][0]))) {
-                let button = document.createElement("button");
-                switch (surveys[idx][1]) {
-                    case 'multiplechoice':
-                        button.innerHTML = 'Multiple Choice';
-                        break;
-                    case 'numericalscale':
-                        button.innerHTML = 'Numerical Scale';
-                        break;
-                    default:
-                        button.innerHTML = 'Short Answer';
-                        break;
+  type: "POST",
+  url: './php/ar-mysql.php',
+  dataType: 'json',
+  data: {functionname: 'getUsers'},
+  success: function (obj, textstatus) {
+                if( !('error' in obj) ) {
+                    users = obj.result;
                 }
-                button.onclick = function () {
-                    sessionStorage.setItem('surveyID', surveys[idx][0]);
-                    window.location.href = "survey-page.html";
-                };
-                surveyTypeButtons.appendChild(button);
-            }
-        }
-    } else {
-        availableSurveys.innerHTML = "Congratulations! You've completed this week's surveys!"
-    }
-};
-
-
-
-// this listens for the user to click the 'submit feedback' button and then adds it to the feedback dictionary as "answer". it also takes the feedbackID and increments it by 1 and adds it to the feedback dictionary as "feedbackID"
-// i would like this to save whatever is in the feedbackField into the Feedback database while also checking to see what the last feedbackID is and incrementing by 1 before adding 
-feedbackButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    if (currentFeedbackField.value != '') {
-        feedback = currentFeedbackField.value;
-        $.ajax({
-            type: "POST",
-            url: './php/home-page-mysql.php',
-            dataType: 'json',
-            data: { functionname: 'writeFeedback', arguments: [feedback] },
-            success: function (obj, textstatus) {
-                if (!('error' in obj)) {
-                    completedSurveys = obj.result;
+                else {
+                    console.log(obj.error);
                 }
-            }
-        });
-        alert('Thank you for your feedback!')
-        currentFeedbackField.value = '';
-    } else {
-        alert('You must enter feedback before you can submit.');
-    }
+          }
 });
 
-// this listens for the user to click the 'logout' button and then takes the user back to the login page while also clearing sessionStorage
-logoutButton.addEventListener("click", (event) => {
-    e.preventDefault();
-    sessionStorage.clear();
-    window.location.href = './login-page.html';
+$.ajax({
+  type: "POST",
+  url: './php/ar-mysql.php',
+  dataType: 'json',
+  data: {functionname: 'getEmailDomains'},
+  success: function (obj, textstatus) {
+                if( !('error' in obj) ) {
+                  emailDomains = obj.result;
+                }
+                else {
+                    console.log(obj.error);
+                }
+          }
 });
+
+$.ajax({
+  type: "POST",
+  url: './php/ar-mysql.php',
+  dataType: 'json',
+  data: {functionname: 'getPendingAccounts'},
+  success: function (obj, textstatus) {
+                if( !('error' in obj) ) {
+                  pendingAccounts = obj.result;
+                }
+                else {
+                    console.log(obj.error);
+                }
+          }
+});
+
+newButton.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const username = newForm.username.value;
+    const password = newForm.password.value;
+    const firstName = newForm.firstname.value;
+    const lastName = newForm.lastname.value;
+    const email = newForm.email.value;
+    
+    let accountAlreadyRequested = false;
+    let userFound = false;
+    let emailFound = false;
+    let validUsername = true;
+    let validEmailDomain = false;
+
+    
+    for (let idx = 0; idx < pendingAccounts.length; idx++) {
+      if (pendingAccounts[idx][0].toLowerCase() === username.toLowerCase() || pendingAccounts[idx][1].toLowerCase() === email.toLowerCase()) {
+        accountAlreadyRequested = true;
+        break;
+      }
+    }
+
+    for (let idx = 0; idx < users.length; idx++) {
+      if (users[idx][0].toLowerCase() === username.toLowerCase()) {
+        userFound = true;
+        break;
+      } else if (users[idx][1].toLowerCase() === email.toLowerCase()) {
+        emailFound = true;
+        break;
+      }
+    }
+
+    for (let idx = 0; idx < username.length; idx++) {
+        validUsername = validChars.includes(username.charAt(idx).toLowerCase())
+        if (!validUsername) break;
+    }
+
+    for (let idx = 0; idx < emailDomains.length; idx++) {
+        validEmailDomain = email.includes(emailDomains[idx][0].toLowerCase());
+        if (validEmailDomain) break;
+    }
+
+    if (userFound) {
+        document.getElementById("new-error-msg").innerHTML = 'An account with that username already exists!'
+        newErrorMsg.style.opacity = 1;
+    } else if (accountAlreadyRequested) {
+      document.getElementById("new-error-msg").innerHTML = 'An account has already been requested with this username or email!'
+        newErrorMsg.style.opacity = 1;
+    } else if (emailFound) {
+      document.getElementById("new-error-msg").innerHTML = 'An account with that email already exists!'
+        newErrorMsg.style.opacity = 1;
+    } else if (!validUsername) {
+        newErrorMsg.innerHTML = 'Your username must consist of alphanumeric characters only!';
+        newErrorMsg.style.opacity = 1;
+    } else if (!validEmailDomain) {
+        newErrorMsg.innerHTML = "Your email domain isn't registered in our database!";
+        newErrorMsg.style.opacity = 1;
+    } else {
+      $.ajax({
+        type: "POST",
+        url: './php/ar-mysql.php',
+        dataType: 'json',
+        data: {functionname: 'writePendingAccounts', arguments: [username, password, firstName, lastName, email, 0, 0, 0]},
+        success: function (obj, textstatus) {
+                      if( ('error' in obj) ) console.log(obj.error);
+                }
+      });
+        window.location.href = './new-account-confirmation.html';
+      }
+    }
+)
