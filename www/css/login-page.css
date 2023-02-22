@@ -5,11 +5,11 @@ html {
   body {
     height: 100%;
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Raleway', sans-serif;
     display: grid;
     justify-items: center;
     align-items: center;
-    background-color: #3a3a3a;
+    background-color: #3e6cbf;
   }
   
   #main-holder {
@@ -18,7 +18,7 @@ html {
     display: grid;
     justify-items: center;
     align-items: center;
-    background-color: white;
+    background-color: #dde9f5;
     border-radius: 7px;
     box-shadow: 0px 0px 5px 2px black;
   }
@@ -75,7 +75,11 @@ html {
     border-radius: 5px;
     color: white;
     font-weight: bold;
-    background-color: #3a3a3a;
+    background-color: #3e6cbf;
     cursor: pointer;
     outline: none;
+  }
+
+  #login-header{
+    color: #3e6cbf;
   }
