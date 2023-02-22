@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Survey</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="./css/admin-page.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/admin-settings.css">
+</head>
+
+<body>
+    <div class="header">
+        <div id=points>
+            Total Points: <div id="total-points">100</div>
+        </div>
+        <div>
+            <a href="./admin-settings.html">
+                <button class="header-button">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </a>
+            <a href="./settings.html">
+                <button class="header-button">
+                    <i class="fas fa-wrench"></i>
+                </button>
+            </a>
+            <a href="./login-page.html">
+                <button class="header-button">
+                    <i id="logout-button" class="fas fa-sign-out-alt"></i>
+                </button>
+            </a>
+        </div>
+    </div>
+    <main id="main-holder">
+        <h1 id="new-header">Admin Settings</h1>
+                <div>
+                    <input type="submit" id="download-surveys" name="download-surveys" value="Download Surveys">
+                </div>
+                <br>
+                <div class="box">
+                    <p id="password">Change User Password</p>
+                    <form id="password-change" method="post">
+                        <p>Username: <input type="text" name="Username" id="username"
+                                required></p>
+                        <p>New Password: <input type="password" name="New Password" id="new-password" required></p>
+                        <input type="submit" value="Confirm" id="new-pw-submit">
+                    </form>
+                </div>
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="./js/admin-settings.js"></script>
+</body>
+
+</html>

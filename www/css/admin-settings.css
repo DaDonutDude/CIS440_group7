@@ -1,0 +1,96 @@
+body {
+    background-color: #dde9f5;
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+  }
+  
+  #main-holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: calc(100vh - 70px);
+  }
+
+  #survey-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .header {
+    background-color: #3e6cbf;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+  
+  .header-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .header-button {
+    background-color: #3e6cbf;
+    border: none;
+    outline: none;
+    margin-left: 20px;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  .header-button i {
+    color: #fff;
+    font-size: 20px;
+  }
+  
+  .main-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: calc(100vh - 70px);
+  }
+  
+  .box {
+    background-color: #fff;
+    width: 500px;
+    height: 230px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px #3e6cbf;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+
+  button {
+    background-color: #3e6cbf;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 18px;
+    font-family: 'Raleway', sans-serif;
+  }
+
+  #new-pw-submit {
+    width: 200px;
+    height: 50px;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #add8e6;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+#password-change p {
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 18px;
+}
