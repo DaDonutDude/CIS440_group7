@@ -6,30 +6,6 @@
     if( !isset($_POST['functionname']) ) { $returnVal['error'] = 'No function name!'; }
     if( !isset($returnVal['error']) ) {
         switch($_POST['functionname']) {
-            case 'writeMultipleChoice':
-                $surveyType = 'multiplechoice';
-                $surveyPoints = 50;
-                $multipleChoice = $_POST['arguments'][0];
-                $statement = $conn -> prepare("INSERT INTO Surveys (surveytype, surveypoints, survey) VALUES (?, ?, ?)");
-                $statement -> bind_param('sis', $surveyType, $surveyPoints, $multipleChoice);
-                $statement -> execute();
-                break;
-            case 'writeNumericalScale':
-                $surveyType = 'numericalscale';
-                $surveyPoints = 50;
-                $numericalScale = $_POST['arguments'][0];
-                $statement = $conn -> prepare("INSERT INTO Surveys (surveytype, surveypoints, survey) VALUES (?, ?, ?)");
-                $statement -> bind_param('sis', $surveyType, $surveyPoints, $numericalScale);
-                $statement -> execute();
-                break;
-            case 'writeShortAnswer':
-                $surveyType = 'shortanswer';
-                $surveyPoints = 100;
-                $shortAnswer = $_POST['arguments'][0];
-                $statement = $conn -> prepare("INSERT INTO Surveys (surveytype, surveypoints, survey) VALUES (?, ?, ?)");
-                $statement -> bind_param('sis', $surveyType, $surveyPoints, $shortAnswer);
-                $statement -> execute();
-                break;
             case 'pullSurvey':
                 $surveyID = $_POST['arguments'][0];
                 $statement = $conn -> prepare("SELECT * FROM Surveys WHERE surveyID=?");
@@ -44,9 +20,10 @@
             case 'writeSurvey':
                 $surveyID = $_POST['arguments'][0];
                 $username = $_POST['arguments'][1];
-                $answer = $_POST['arguments'][2];
-                $statement = $conn -> prepare("INSERT INTO CompletedSurveys (surveyID, username, answer) VALUES (?, ?, ?)");
-                $statement -> bind_param('iss', $surveyID, $username, $answer);
+                $question = $_POST['arguments'][2];
+                $answer = $_POST['arguments'][3];
+                $statement = $conn -> prepare("INSERT INTO CompletedSurveys (surveyID, username, question, answer) VALUES (?, ?, ?, ?)");
+                $statement -> bind_param('isss', $surveyID, $username, $question, $answer);
                 $statement -> execute();
                 break;
             default:

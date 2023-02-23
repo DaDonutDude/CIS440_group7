@@ -32,14 +32,10 @@ downloadButton.addEventListener('click', (e) => {
             if (!('error' in obj)) {
                 surveys = obj.result;
                 if (surveys.length > 0) {
-                    alert(csv);
-                    csv.push(['SurveyID', 'Answer'] + '\n');
-                    alert(csv);
+                    csv.push(['SurveyID', 'Question', 'Answer'] + '\n');
                     surveys.forEach(function (row) {
-                        alert(row);
                         csv.push(row + '\n');
                     });
-                    alert(csv);
                     const download = new Blob(csv, { type: 'text/csv' });
                     const url = window.URL.createObjectURL(download);
                     const elem = document.createElement('a');

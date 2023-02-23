@@ -8,11 +8,11 @@
     if( !isset($returnVal['error']) ) {
         switch($_POST['functionname']) {
             case 'getSurveys':
-                $statement = $conn -> prepare("SELECT surveyID, answer FROM CompletedSurveys");
+                $statement = $conn -> prepare("SELECT surveyID, question, answer FROM CompletedSurveys");
                 $statement -> execute();
                 $result = $statement -> get_result();
                 while ($row = $result -> fetch_row()) {
-                    array_push($surveys, [$row[0], $row[1]]);
+                    array_push($surveys, [$row[0], $row[1], $row[2]]);
                 }
                 $returnVal['result'] = $surveys;
                 echo json_encode($returnVal);
