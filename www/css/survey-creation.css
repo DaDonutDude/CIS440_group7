@@ -1,4 +1,4 @@
-* {
+*{
   font-family: 'Raleway', sans-serif;
 }
 
@@ -37,4 +37,5 @@ body {
     width:500px;
     font-size:12pt;
     resize: none;
+    box-shadow: 2px 2px 5px #3e6cbf;
   }

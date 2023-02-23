@@ -1,29 +1,34 @@
-body {
-    background-color: #3e6cbf;;
+*{
     font-family: 'Raleway', sans-serif;
+}
+body {
+    background-color: #dde9f5;
+    margin: 0;
 }
 #main-holder {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 #setting-header {
-    background-color: #dde9f5;
-    width: 95%;
-    margin-top: 10px;
-    padding: 20px;
-    box-shadow: 2px 2px 10px grey;
-    text-align: center;
-    font-size: 36px;
-    font-weight: bold;
+    background-color: #3e6cbf;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    margin-right: 15px;
+    margin-bottom: 20px;
 }
 .box {
-    background-color: #a6bce6;
+    background-color: #fff;;
     width: 50%;
-    padding: 20px;
+    padding: 25px;
     margin: 20px 0;
     border-radius: 10px;
-    box-shadow: 2px 2px 10px grey;
+    box-shadow: 2px 2px 5px #3e6cbf;
 }
 #name, #organization {
     font-size: 24px;
@@ -35,7 +40,7 @@ body {
     margin-top: 20px;
     font-size: 18px;
     font-weight: bold;
-    background-color: #add8e6;
+    background-color: #3e6cbf;
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -46,7 +51,7 @@ body {
     font-size: 18px;
 }
   
-  .header-button {
+.header-button {
     background-color: #3e6cbf;
     border: none;
     outline: none;
@@ -55,7 +60,25 @@ body {
     border-radius: 5px;
   }
   
-  .header-button i {
+.header-button i {
     color: #fff;
     font-size: 20px;
+}
+
+#password{
+    font-size: 24px;
+}
+
+#company-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    color: #fff;
+    font-size: 24px;
+    margin-left: 170px;
+  }
+
+input{
+    color:white;
   }
