@@ -1,7 +1,10 @@
+* {
+  font-family: 'Raleway', sans-serif;
+}
+
 body {
     background-color: #dde9f5;
     margin: 0;
-    font-family: 'Raleway', sans-serif;
   }
   
   #main-holder {
