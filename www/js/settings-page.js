@@ -8,6 +8,10 @@ let newPasswordField = document.getElementById("new-password");
 const passwordResetButton = document.getElementById("new-pw-submit");
 const logoutButton = document.getElementById("logout-button");
 
+if (sessionStorage.getItem('admin')) {
+    document.getElementById('home-button').href = './admin-home.html';
+}
+
 $.ajax({
     type: "POST",
     url: './php/settings-mysql.php',
@@ -33,8 +37,10 @@ $.ajax({
 
 
 // this brings the user back to the login page and resets session storage, essentially "logging" them out
-logoutButton.addEventListener("click", (event) => {
-    sessionStorage.clear()
+logoutButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    sessionStorage.clear();
+    window.location.href = './login-page.html';
 });
 
 

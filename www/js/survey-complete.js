@@ -68,5 +68,6 @@ function update_database() {
 
 async function take_me_home() {
     await new Promise(r => setTimeout(r, 5000))
-    window.location.href = "./user-home.html";
+    if (sessionStorage.getItem('admin')) window.location.href = "./admin-home.html";
+    else window.location.href = "./user-home.html";
 }

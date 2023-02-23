@@ -3,6 +3,7 @@
 let survey;
 let surveyID = sessionStorage.getItem('surveyID');
 let username = sessionStorage.getItem('token');
+let question;
 const loadQuestion = document.getElementById('load-question');
 const surveyButton = document.getElementById("survey-form-submit");
 
@@ -18,6 +19,7 @@ $.ajax({
                     switch (survey[1]) {
                         case 'multiplechoice':
                             let splitQuestion = survey[3].split("\n");
+                            question = splitQuestion[0];
                             document.getElementById('survey-field').innerHTML = splitQuestion[0];
                             loadQuestion.innerHTML = '<div class="survey-form-field"><input type="radio" id="5" value="5" name="answer"><label for="5" id="high"></label></div><div class="survey-form-field"><input type="radio" id="4" value="4" name="answer"><label for="4" id="mid-high"></label></div><div class="survey-form-field"><input type="radio" id="3" value="3" name="answer"><label for="3" id="mid-low"></label></div><div class="survey-form-field"><input type="radio" id="2" value="2" name="answer"><label for="2" id="low"></label></div><div class="survey-form-field"><input type="radio" id="1" value="1" name="answer"><label for="1" id="none"></label></div>';
                             document.getElementById('high').innerHTML = splitQuestion[1];
@@ -27,10 +29,12 @@ $.ajax({
                             document.getElementById('none').innerHTML = splitQuestion[5];
                             break;
                         case 'numericalscale':
+                            question = survey[3];
                             document.getElementById('survey-field').innerHTML = survey[3];
                             loadQuestion.innerHTML = '<div class="nsradiogroup"><input id="10" type="radio" value="10" name="answer"><label for="10">10</label></div><div class="nsradiogroup"><input id="9" type="radio" value="9" name="answer"><label for="9">9</label></div><div class="nsradiogroup"><input id="8" type="radio" value="8" name="answer"><label for="8">8</label></div><div class="nsradiogroup"><input id="7" type="radio" value="7" name="answer"><label for="7">7</label></div><div class="nsradiogroup"><input id="6" type="radio" value="6" name="answer"><label for="6">6</label></div><div class="nsradiogroup"><input id="5" type="radio" value="5" name="answer"><label for="5">5</label></div><div class="nsradiogroup"><input id="4" type="radio" value="4" name="answer"><label for="4">4</label></div><div class="nsradiogroup"><input id="3" type="radio" value="3" name="answer"><label for="3">3</label></div><div class="nsradiogroup"><input id="2" type="radio" value="2" name="answer"><label for="2">2</label></div><div class="nsradiogroup"><input id="1" type="radio" value="1" name="answer"><label for="1">1</label></div>';
                             break;
                         case 'shortanswer':
+                            question = survey[3];
                             document.getElementById('survey-field').innerHTML = survey[3];
                             loadQuestion.innerHTML = '<textarea id="text" maxlength="500" style="height:200px;width:500px;font-size:12pt;resize: none;" placeholder="500 character limit..."></textarea><br><br>';
                             break;
@@ -106,7 +110,7 @@ surveyButton.addEventListener("click", (e) => {
             type: "POST",
             url: './php/survey-mysql.php',
             dataType: 'json',
-            data: {functionname: 'writeSurvey', arguments: [surveyID, username, answer]},
+            data: {functionname: 'writeSurvey', arguments: [surveyID, username, question, answer]},
             success: function (obj, textstatus) {
                           if( ('error' in obj) ) console.log(obj.error);
                     }
