@@ -1,0 +1,26 @@
+body {
+    background-color: #dde9f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 95vh;
+    font-family: 'Raleway', sans-serif;
+  }
+  
+  #account-complete-box {
+    color: #3e6cbf;
+    background-color: #fff;
+    text-align: center;
+    box-shadow: 2px 2px 5px #3e6cbf;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  #account_complete_div {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  #account_redirect_div {
+    font-size: 18px;
+  }
