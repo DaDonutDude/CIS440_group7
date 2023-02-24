@@ -1,7 +1,7 @@
 "use strict";
 let userFound = false;
 let user;
-let completedSurveys;
+let completedSurveys = [];
 let surveys;
 let feedback;
 let username = sessionStorage.getItem('token');
