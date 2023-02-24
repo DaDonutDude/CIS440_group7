@@ -91,7 +91,9 @@ window.onload = (e) => {
                     sessionStorage.setItem('surveyID', surveys[idx][0]);
                     window.location.href = "survey-page.html";
                 };
-                surveyTypeButtons.appendChild(button);
+                surveyTypeButtons.innerHTML += '<div>';
+                surveyTypeButtons.appendChild(button)
+                surveyTypeButtons.innerHTML += '</div><br><br>';
             }
         }
     } else {
