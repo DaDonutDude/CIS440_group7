@@ -16,8 +16,8 @@ html {
   }
   
   #main-holder {
-    width: 50%;
-    height: 75%;
+    width: 900px;
+    height: 700px;
     display: grid;
     justify-items: center;
     align-items: center;
