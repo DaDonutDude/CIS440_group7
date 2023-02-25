@@ -61,7 +61,7 @@ body {
     padding-bottom: 20px;
   }
   
-p {
+  p {
     color: #333;
     font-size: 18px;
     margin: 0;
@@ -91,15 +91,4 @@ p {
     font-size: 24px;
     color: #fff;
     padding-left: 35px;
-  }
-
-  #surveyTypeButtons{
-    width: 150px;
-    height: 62px;
-    padding-left: 35%;
-  
-  }
-  
-  .newDiv{
-    margin-top: 5px;
   }
