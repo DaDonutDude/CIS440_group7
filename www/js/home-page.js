@@ -33,6 +33,7 @@ $.ajax({
     type: "POST",
     url: './php/home-page-mysql.php',
     dataType: 'json',
+    async: false,
     data: { functionname: 'getCompletedSurveys', arguments: [username] },
     success: function (obj, textstatus) {
         if (!('error' in obj)) {
@@ -60,6 +61,9 @@ $.ajax({
         }
     }
 });
+
+
+
 
 
 window.onload = (e) => {
@@ -91,9 +95,9 @@ window.onload = (e) => {
                     sessionStorage.setItem('surveyID', surveys[idx][0]);
                     window.location.href = "survey-page.html";
                 };
-                surveyTypeButtons.innerHTML += '<div>';
-                surveyTypeButtons.appendChild(button)
-                surveyTypeButtons.innerHTML += '</div><br><br>';
+                var newDiv = document.createElement('div');
+                newDiv.appendChild(button);
+                surveyTypeButtons.appendChild(newDiv);
             }
         }
     } else {
