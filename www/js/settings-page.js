@@ -81,7 +81,6 @@ passwordResetButton.addEventListener("click", (e) => {
                       if( ('error' in obj) ) console.log(obj.error);
                 }
       });
-    console.log(currentPassword + " has now been updated to: " + newPassword);
     alert("Password successfully updated!");
     clearPasswordFields();
 });

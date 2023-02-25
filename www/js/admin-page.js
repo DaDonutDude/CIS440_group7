@@ -63,15 +63,12 @@ $.ajax({
 
 window.onload = (e) => {
     let surveyTypeButtons = document.getElementById("surveyTypeButtons");
-    console.log(surveys.length);
-    console.log(completedSurveys.length);
     if (completedSurveys.length < surveys.length) {
         availableSurveys.innerHTML = "You have surveys available!"
         let takenSurveys = [];
         for (let idx = 0; idx < completedSurveys.length; idx++) {
             takenSurveys.push(parseInt(completedSurveys[idx]));
         }
-        console.log(takenSurveys);
         for (let idx = 0; idx < surveys.length; idx++) {
             if (!takenSurveys.includes(parseInt(surveys[idx][0]))) {
                 let button = document.createElement("button");
