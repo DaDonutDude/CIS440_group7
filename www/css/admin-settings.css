@@ -125,7 +125,6 @@ body {
 
 #password-change input[type="text"],
 #password-change input[type="password"] {
-    width: 80%;
     margin-bottom: 10px;
 }
 

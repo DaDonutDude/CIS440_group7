@@ -96,3 +96,14 @@ button {
   color: #fff;
   padding-left: 35px;
 }
+
+#surveyTypeButtons{
+  width: 150px;
+  height: 62px;
+  padding-left: 35%;
+
+}
+
+.newDiv{
+  margin-top: 5px;
+}

@@ -1,14 +1,20 @@
 "use strict";
 let userFound = false;
 let user;
-let completedSurveys;
+let completedSurveys = [];
 let surveys;
 let feedback;
 let username = sessionStorage.getItem('token');
 const homepageNameLabel = document.getElementById("home-name");
 const userTotalPoints = document.getElementById("total-points");
 const logoutButton = document.getElementById("logout-button");
-const availableSurveys = document.getElementById("available-surveys")
+const availableSurveys = document.getElementById("available-surveys");
+let newDiv = document.createElement("div");
+let newDiv1 = document.createElement("div");
+let newDiv2 = document.createElement("div");
+newDiv.className = "newDiv";
+newDiv1.className = "newDiv";
+newDiv2.className = "newDiv";
 
 $.ajax({
     type: "POST",
@@ -77,21 +83,22 @@ window.onload = (e) => {
                 switch (surveys[idx][1]) {
                     case 'multiplechoice':
                         button.innerHTML = 'Multiple Choice';
+                        surveyTypeButtons.appendChild(newDiv);
                         break;
                     case 'numericalscale':
                         button.innerHTML = 'Numerical Scale';
+                        surveyTypeButtons.appendChild(newDiv1);
                         break;
                     default:
                         button.innerHTML = 'Short Answer';
+                        surveyTypeButtons.appendChild(newDiv2);
                         break;
                 }
                 button.onclick = function () {
                     sessionStorage.setItem('surveyID', surveys[idx][0]);
                     window.location.href = "survey-page.html";
                 };
-                surveyTypeButtons.innerHTML += '<div>';
                 surveyTypeButtons.appendChild(button)
-                surveyTypeButtons.innerHTML += '</div><br><br>';
             }
         }
     } else {
